@@ -1,0 +1,1317 @@
+I am building a **complete but focused full-stack e-commerce application** as a portfolio/resume project.
+
+I have 5+ years of frontend/React experience, but I am currently strengthening my backend skills with Node.js, Express.js, MongoDB and Mongoose.
+
+My goal is to become interview-ready for full-stack roles within approximately one month.
+
+Therefore, this project must be **substantial enough to demonstrate real full-stack/backend engineering**, but it must NOT become a months-long production e-commerce platform.
+
+---
+
+# IMPORTANT DEVELOPMENT RULE
+
+## I will build the backend myself.
+
+Do NOT automatically generate the complete backend for me.
+
+I want to use this project to genuinely learn backend engineering.
+
+When I ask for help with backend:
+
+1. First explain the concept.
+2. Explain why the approach is used.
+3. Explain the architecture/business logic.
+4. Give me hints or a small example when appropriate.
+5. Let me implement the main solution myself.
+6. Review my implementation when I provide it.
+7. Help me debug when I get stuck.
+
+Do not replace my implementation with a completely generated solution unless I explicitly ask for the full implementation.
+
+I should personally understand every important backend decision and piece of business logic that goes into this project.
+
+---
+
+# AI USAGE
+
+I will use AI heavily for the frontend because I already have strong frontend experience and want to save time.
+
+AI can help generate:
+
+* Next.js UI
+* Tailwind CSS
+* React components
+* Admin dashboard UI
+* Forms
+* Tables
+* Charts
+* Responsive layouts
+* Loading states
+* Empty states
+* API integration boilerplate
+
+However, I will personally own and understand:
+
+* Backend architecture
+* Database design
+* API design
+* Authentication
+* Authorization
+* Business logic
+* Order processing
+* Inventory logic
+* Payment logic
+* Validation
+* Error handling
+* Security decisions
+* MongoDB queries
+
+---
+
+# TECHNOLOGY STACK
+
+## Frontend
+
+* Next.js
+* TypeScript
+* React
+* Tailwind CSS
+* Redux Toolkit where appropriate
+
+## Backend
+
+* Node.js
+* Express.js
+* TypeScript
+* MongoDB
+* Mongoose
+
+## Authentication
+
+Use a secure authentication approach such as:
+
+* JWT
+* HttpOnly cookies
+* Password hashing
+
+Choose the approach based on simplicity and practical industry usage.
+
+## Development Tools
+
+* Postman
+* Git
+* GitHub
+* Cursor/AI
+
+---
+
+# PROJECT OBJECTIVE
+
+Build a complete e-commerce application with two major sides:
+
+```text
+Customer
+    ↓
+Browse Products
+    ↓
+Search / Filter / Sort
+    ↓
+Product Details
+    ↓
+Cart
+    ↓
+Checkout
+    ↓
+Purchase
+    ↓
+Orders
+    ↓
+Review
+```
+
+And:
+
+```text
+Admin
+    ↓
+Dashboard
+    ├── Users
+    ├── Products
+    ├── Categories
+    ├── Orders
+    └── Reviews
+```
+
+---
+
+# CUSTOMER FEATURES
+
+## 1. User Authentication
+
+Implement:
+
+```text
+Register
+Login
+Logout
+Get current user
+```
+
+User should be able to:
+
+* Register
+* Login
+* Logout
+* View profile
+* Update profile
+* Change password
+* Manage addresses
+
+---
+
+# 2. Product Listing
+
+Customer should be able to:
+
+* View all products
+* View product details
+* Browse by category
+* Search products
+* Filter products
+* Sort products
+* Paginate products
+
+Example API:
+
+```text
+GET /api/products
+```
+
+Possible query parameters:
+
+```text
+search
+category
+minPrice
+maxPrice
+rating
+sort
+page
+limit
+```
+
+Example:
+
+```text
+/api/products?search=chair&category=furniture&minPrice=5000&maxPrice=30000&sort=price_asc&page=1&limit=20
+```
+
+---
+
+# 3. Product Details
+
+Product details should include appropriate information such as:
+
+```text
+Name
+Description
+Price
+Discount
+Images
+Category
+Stock
+Rating
+Review count
+Availability
+```
+
+The backend must provide reliable product information.
+
+---
+
+# 4. Cart
+
+Customer should be able to:
+
+```text
+Add product
+Remove product
+Increase quantity
+Decrease quantity
+View cart
+Clear cart
+```
+
+Important:
+
+Do NOT blindly trust prices or product information sent by the frontend.
+
+The backend should retrieve the current product information from the database and calculate important values itself.
+
+For example:
+
+```text
+Frontend:
+productId = 123
+quantity = 2
+price = 999
+```
+
+The backend should NOT simply trust:
+
+```text
+price = 999
+```
+
+Instead:
+
+```text
+Backend
+    ↓
+Find product in MongoDB
+    ↓
+Get current price
+    ↓
+Validate stock
+    ↓
+Calculate total
+```
+
+---
+
+# 5. Checkout
+
+Customer should be able to:
+
+```text
+View cart
+    ↓
+Select address
+    ↓
+Review order
+    ↓
+Confirm purchase
+    ↓
+Payment
+    ↓
+Order confirmation
+```
+
+Backend should calculate:
+
+```text
+Subtotal
+Discount
+Shipping
+Tax if applicable
+Final total
+```
+
+The frontend should not be considered authoritative for the final amount.
+
+---
+
+# 6. Purchase / Order Flow
+
+Order should contain appropriate information such as:
+
+```text
+Customer
+Items
+Product
+Quantity
+Price at purchase time
+Subtotal
+Discount
+Shipping
+Total
+Shipping address
+Payment status
+Order status
+CreatedAt
+UpdatedAt
+```
+
+Order statuses:
+
+```text
+pending
+confirmed
+processing
+shipped
+delivered
+cancelled
+```
+
+Customer should be able to:
+
+```text
+View orders
+View order details
+Track order status
+Cancel order where allowed
+```
+
+---
+
+# 7. Inventory
+
+When an order is successfully created:
+
+Example:
+
+```text
+Product stock = 10
+
+Customer purchases = 2
+
+New stock = 8
+```
+
+Do not allow:
+
+```text
+Stock = 2
+Purchase = 5
+
+→ Reject order
+```
+
+The backend must prevent negative stock.
+
+Also consider the possibility of two customers attempting to purchase the same product at nearly the same time.
+
+The inventory logic should be designed to minimize/prevent overselling.
+
+This should be implemented in a way that can be explained during an interview.
+
+---
+
+# 8. Reviews & Ratings
+
+Customer should be able to:
+
+```text
+Create review
+Update own review
+Delete own review
+```
+
+Review should contain appropriate fields such as:
+
+```text
+User
+Product
+Rating
+Comment
+CreatedAt
+UpdatedAt
+```
+
+Important business rule:
+
+A customer should only be allowed to review a product they have purchased, where practical for the project.
+
+Prevent duplicate reviews for the same product if that is the chosen business rule.
+
+Product should expose:
+
+```text
+Average rating
+Review count
+```
+
+---
+
+# ADMIN FEATURES
+
+## 9. Admin Authentication
+
+Admin users should have a separate role.
+
+Roles:
+
+```text
+admin
+customer
+```
+
+Implement role-based authorization.
+
+Example:
+
+```text
+POST /api/products
+```
+
+should require:
+
+```text
+Authenticated user
++
+Admin role
+```
+
+But:
+
+```text
+GET /api/products
+```
+
+can be public.
+
+---
+
+# 10. Product Management
+
+Admin should be able to:
+
+```text
+Create product
+View products
+View product details
+Update product
+Delete product
+```
+
+Product fields should support appropriate e-commerce information such as:
+
+```text
+Name
+Description
+Price
+Discount
+Category
+Images
+Stock
+SKU
+Rating
+Review count
+Active/inactive status
+CreatedAt
+UpdatedAt
+```
+
+---
+
+# 11. Category Management
+
+Admin should be able to:
+
+```text
+Create category
+Update category
+Delete category
+View categories
+```
+
+Customer should be able to browse products by category.
+
+---
+
+# 12. User Management
+
+Admin should be able to:
+
+```text
+View users
+Search users
+View user details
+Block/unblock users
+```
+
+A blocked user should not be able to perform protected customer actions.
+
+---
+
+# 13. Order Management
+
+Admin should be able to:
+
+```text
+View all orders
+Search orders
+Filter orders
+View order details
+Update order status
+```
+
+Example:
+
+```text
+pending
+    ↓
+confirmed
+    ↓
+processing
+    ↓
+shipped
+    ↓
+delivered
+```
+
+Handle cancellation appropriately.
+
+---
+
+# 14. Review Management
+
+Admin should be able to:
+
+```text
+View reviews
+Delete inappropriate reviews
+```
+
+Keep this feature simple.
+
+---
+
+# 15. Admin Analytics
+
+Create a simple admin dashboard.
+
+Show:
+
+```text
+Total Users
+Total Products
+Total Orders
+Total Revenue
+Pending Orders
+Delivered Orders
+```
+
+Also include simple analytics such as:
+
+```text
+Sales by day/month
+Orders by status
+Top-selling products
+```
+
+Use MongoDB aggregation where appropriate.
+
+Do NOT turn this into a complex analytics platform.
+
+---
+
+# BACKEND REQUIREMENTS
+
+The backend should demonstrate professional fundamentals.
+
+## REST API
+
+Use proper REST conventions.
+
+Example:
+
+```text
+/api/auth
+/api/users
+/api/products
+/api/categories
+/api/cart
+/api/orders
+/api/reviews
+/api/admin/analytics
+```
+
+Use appropriate HTTP methods:
+
+```text
+GET
+POST
+PATCH
+DELETE
+```
+
+Use meaningful HTTP status codes.
+
+---
+
+# DATABASE MODELS
+
+Likely core models:
+
+```text
+User
+Product
+Category
+Cart
+Order
+Review
+Address
+```
+
+Design relationships carefully.
+
+Possible relationship:
+
+```text
+User
+ ├── Addresses
+ ├── Cart
+ ├── Orders
+ └── Reviews
+
+Category
+ └── Products
+
+Product
+ ├── Orders
+ └── Reviews
+
+Order
+ ├── User
+ └── Products / OrderItems
+```
+
+Use Mongoose references/ObjectIds appropriately.
+
+Do not over-normalize or over-engineer the MongoDB database.
+
+---
+
+# AUTHENTICATION
+
+Understand and implement:
+
+```text
+Registration
+Password hashing
+Login
+Authentication
+Logout
+Protected routes
+Role-based authorization
+```
+
+Never store plain-text passwords.
+
+Do not expose sensitive user information in responses.
+
+---
+
+# MIDDLEWARE
+
+Implement reusable middleware for:
+
+```text
+Authentication
+Authorization
+Validation
+Error handling
+```
+
+I should understand:
+
+```text
+req
+res
+next
+```
+
+and the Express request lifecycle.
+
+---
+
+# VALIDATION
+
+Validate important incoming data.
+
+Examples:
+
+```text
+Email
+Password
+Product price
+Stock
+Quantity
+Address
+Rating
+Order data
+```
+
+Never assume frontend validation is sufficient.
+
+Backend validation is mandatory.
+
+---
+
+# ERROR HANDLING
+
+Implement centralized error handling.
+
+Use consistent API responses.
+
+Example:
+
+```json
+{
+  "success": false,
+  "message": "Product not found"
+}
+```
+
+Handle common cases:
+
+```text
+400 Bad Request
+401 Unauthorized
+403 Forbidden
+404 Not Found
+409 Conflict
+422 Validation Error
+500 Internal Server Error
+```
+
+Do not expose sensitive internal errors.
+
+---
+
+# SEARCH / FILTERING / SORTING / PAGINATION
+
+Products should support:
+
+```text
+Search
+Category filtering
+Price filtering
+Rating filtering
+Sorting
+Pagination
+```
+
+Example:
+
+```text
+/api/products
+?search=chair
+&category=furniture
+&minPrice=5000
+&maxPrice=30000
+&sort=price_asc
+&page=1
+&limit=20
+```
+
+Understand the MongoDB queries behind these operations.
+
+---
+
+# SECURITY
+
+Implement or understand:
+
+```text
+Password hashing
+Authentication
+Authorization
+HttpOnly cookies
+CORS
+Input validation
+Rate limiting
+Environment variables
+Secret management
+```
+
+Understand common backend security problems such as:
+
+```text
+XSS
+CSRF
+NoSQL injection
+Broken authorization
+```
+
+Do not expose:
+
+```text
+Passwords
+JWT secrets
+Database credentials
+API secrets
+Payment secrets
+```
+
+---
+
+# PAYMENT
+
+Payment integration is optional for the first working version.
+
+If time allows, integrate a payment gateway.
+
+If implemented, payment flow should be:
+
+```text
+Customer
+   ↓
+Checkout
+   ↓
+Create payment/order intent
+   ↓
+Payment gateway
+   ↓
+Payment verification
+   ↓
+Confirm order
+   ↓
+Update inventory
+```
+
+Never trust the frontend alone to tell the backend that payment succeeded.
+
+If payment integration threatens the one-month deadline, keep it as a later enhancement rather than delaying the core project.
+
+---
+
+# TESTING
+
+Use Postman extensively.
+
+Test both successful and failed scenarios.
+
+Important tests:
+
+### Authentication
+
+```text
+Register
+Login
+Logout
+Invalid login
+Protected route without authentication
+```
+
+### Authorization
+
+```text
+Customer accessing admin route
+Customer accessing another user's order
+Admin accessing admin functionality
+```
+
+### Products
+
+```text
+Create
+Read
+Update
+Delete
+Search
+Filter
+Sort
+Pagination
+Invalid product
+```
+
+### Orders
+
+```text
+Create order
+Insufficient stock
+View own orders
+Access another user's order
+Admin view all orders
+Update status
+Cancellation
+```
+
+### Reviews
+
+```text
+Create review
+Update own review
+Delete own review
+Unauthorized review
+Review without purchase
+```
+
+---
+
+# PROJECT ARCHITECTURE
+
+Prefer a clean modular structure.
+
+Example:
+
+```text
+backend/
+│
+├── src/
+│   ├── config/
+│   │
+│   ├── modules/
+│   │   ├── auth/
+│   │   ├── users/
+│   │   ├── products/
+│   │   ├── categories/
+│   │   ├── cart/
+│   │   ├── orders/
+│   │   ├── reviews/
+│   │   └── analytics/
+│   │
+│   ├── middleware/
+│   ├── utils/
+│   ├── app.ts
+│   └── server.ts
+│
+├── .env
+├── .gitignore
+├── package.json
+└── README.md
+```
+
+The exact structure can change if there is a good reason.
+
+Do not follow architecture patterns blindly.
+
+I should understand why each layer exists.
+
+---
+
+# FRONTEND
+
+The frontend should provide:
+
+## Customer
+
+```text
+Home
+Products
+Product Details
+Search
+Filters
+Cart
+Checkout
+Login/Register
+Profile
+Orders
+Order Details
+Reviews
+```
+
+## Admin
+
+```text
+Dashboard
+Users
+Products
+Categories
+Orders
+Reviews
+Analytics
+```
+
+The frontend should be functional and reasonably polished, but UI perfection is NOT the objective.
+
+Use AI to accelerate frontend development.
+
+---
+
+# SCOPE CONTROL
+
+This is extremely important.
+
+The project must remain achievable within approximately one month.
+
+## MUST HAVE
+
+```text
+User authentication
+User management
+Products
+Categories
+Product search
+Filtering
+Sorting
+Pagination
+Cart
+Checkout
+Orders
+Inventory
+Reviews
+Admin panel
+Basic analytics
+Authorization
+Validation
+Error handling
+```
+
+## OPTIONAL IF TIME ALLOWS
+
+```text
+Payment gateway
+Image upload
+Wishlist
+Coupons
+Email notifications
+```
+
+## DO NOT ADD
+
+```text
+Microservices
+Kafka
+Complex Redis architecture
+Recommendation engine
+Multi-vendor marketplace
+Real-time chat
+Advanced shipping infrastructure
+Complex warehouse management
+Complex notification system
+AI recommendation system
+Advanced analytics platform
+```
+
+If a new feature is suggested, first ask:
+
+> Does this materially improve the project's learning value or resume impact?
+
+If not, skip it.
+
+---
+
+# DEVELOPMENT ORDER
+
+Build the project in this order:
+
+### Phase 1
+
+```text
+Project setup
+TypeScript
+Express
+MongoDB
+Mongoose
+Architecture
+```
+
+### Phase 2
+
+```text
+User
+Authentication
+Authorization
+```
+
+### Phase 3
+
+```text
+Category
+Product
+Product CRUD
+```
+
+### Phase 4
+
+```text
+Search
+Filtering
+Sorting
+Pagination
+```
+
+### Phase 5
+
+```text
+Cart
+```
+
+### Phase 6
+
+```text
+Orders
+Checkout
+Inventory
+```
+
+### Phase 7
+
+```text
+Reviews
+Ratings
+```
+
+### Phase 8
+
+```text
+Admin
+Analytics
+```
+
+### Phase 9
+
+```text
+Error handling
+Validation
+Security
+Testing
+README
+Deployment
+```
+
+### Phase 10
+
+```text
+Next.js frontend
+API integration
+Customer flow
+Admin flow
+```
+
+Frontend development can happen alongside backend development when useful, but backend understanding is the priority.
+
+---
+
+# INTERVIEW OBJECTIVE
+
+This is not just a coding project.
+
+I want to be able to explain it in a full-stack interview.
+
+After completing the project, I should be able to answer questions such as:
+
+### Architecture
+
+* Why did you choose Node.js/Express?
+* Why MongoDB?
+* How is your backend structured?
+* Why did you separate controllers and services?
+* How does a request flow through your application?
+
+### Authentication
+
+* How does login work?
+* How are passwords stored?
+* How do you protect routes?
+* How does authorization work?
+* Why HttpOnly cookies?
+* What happens if a user's token is invalid?
+
+### Database
+
+* How are your collections related?
+* Why did you use references?
+* How does `populate()` work?
+* How do you search products?
+* How does pagination work?
+* Where would you use indexes?
+
+### E-commerce
+
+* How does checkout work?
+* How do you calculate the final price?
+* How do you prevent users from manipulating prices?
+* How do you prevent ordering out-of-stock products?
+* How do you prevent overselling?
+* How do reviews verify that a customer purchased the product?
+
+### Security
+
+* How do you prevent unauthorized access?
+* How do you protect passwords?
+* What is CORS?
+* What is XSS?
+* What is CSRF?
+* How do you protect against NoSQL injection?
+
+### Scalability
+
+* What would become a bottleneck if the application had 100,000 users?
+* Where would you introduce caching?
+* What database queries would you optimize?
+* How would you handle large product catalogs?
+
+I should understand the answers rather than memorize them.
+
+---
+
+# DEFINITION OF DONE
+
+The project is finished when a customer can:
+
+```text
+Register
+   ↓
+Login
+   ↓
+Browse products
+   ↓
+Search/filter/sort
+   ↓
+View product
+   ↓
+Add to cart
+   ↓
+Checkout
+   ↓
+Purchase
+   ↓
+View order
+   ↓
+Review purchased product
+```
+
+And an admin can:
+
+```text
+Login
+   ↓
+View dashboard
+   ↓
+Manage users
+   ↓
+Manage products
+   ↓
+Manage categories
+   ↓
+Manage orders
+   ↓
+Manage reviews
+   ↓
+View basic analytics
+```
+
+The backend must properly handle:
+
+```text
+Authentication
+Authorization
+Validation
+Errors
+Inventory
+Order logic
+Database operations
+Security
+```
+
+---
+
+# FINAL RULE
+
+Do not optimize this project for the number of features.
+
+Optimize it for:
+
+```text
+Real functionality
++
+Clean architecture
++
+Correct business logic
++
+Backend understanding
++
+Interview explainability
+```
+
+The final project should be something I can confidently put on my resume and explain line-by-line in an interview.
+
+When I start working on this project, help me **step-by-step**, beginning with project initialization and architecture.
+
+Do not jump ahead and generate the entire project.
+
+Always keep the one-month deadline and scope in mind.
